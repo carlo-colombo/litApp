@@ -1,5 +1,5 @@
 (function($){
-    $.fn.litApp = function(dbname,app,options){
+    $.litApp = function(dbname,app,options){
         var that = this;
         that.options = {
             session: true
