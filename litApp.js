@@ -82,7 +82,10 @@
             if($.isFunction(options.success)){
                 options.success.call(localStorage[id]);
             }
-        }else{
+        }else if(window.navigator.onLine){
+            that.db.openDoc(id,options);
+        }
+        else{
             log("Offline and without localStorage")
         }
     }
