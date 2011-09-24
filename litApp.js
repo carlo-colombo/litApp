@@ -9,7 +9,7 @@
         };
 
         //enabling ajax request loggin if debug=true
-        if(!!debug && window.console){
+        if(!!that.options.debug && window.console){
             $.ajaxSetup({
                success: function(message,status,response){
                     console.log(message,status,response);
@@ -53,16 +53,49 @@
         })
     }
     
-    var openDoc =function(id){
+    var openDoc =function(id,options){
+        var options = options || {};
         var that=this;
-        if(window.navigator.onLine){
-            that.db.head(id);
+        if(window.navigator.onLine && that.options.localStorage){
+            that.db.docInfo(id,{
+                success: function(m,s,response){
+                    var _rev = response.getResponseHeader("ETag").replace(/\"/g,""),
+                        _id=localStorage[_rev];
+                    if(_id){
+                        if($.isFunction(options.success)){
+                            options.success.call(localStorage[_id]);
+                        }
+                    }else{
+                        that.db.openDoc(id,$.extend({
+                            success: function(data,status,response){
+                                localStorage[id]=data;
+                                localStorage[data._rev]=id;
+                                if($.isFunction(options.success)){
+                                    options.success.call(data,status,response);
+                                }
+                            }
+                        },options));
+                    }
+                }
+            });
+        }else if(that.options.localStorage){
+            if($.isFunction(options.success)){
+                options.success.call(localStorage[id]);
+            }
+        }else{
+            log("Offline and without localStorage")
         }
     }
     
     function trigger(event){
         return function(data){
             $(window).trigger(event,data);
+        }
+    }
+    
+    function log(){
+        if(window.console){
+            console.log(arguments);
         }
     }
 })(jQuery);
