@@ -77,6 +77,11 @@ jQuery(function($){
 						type: 'textarea',
 						help: 'Evaluated as markdown',
 						rows: 8
+					},
+					{
+						name: 'nascosto',
+						type: 'hidden',
+						value: 'nascosto'
 					}
 				]
 			},

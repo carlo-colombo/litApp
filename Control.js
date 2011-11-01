@@ -7,6 +7,7 @@
 		$.litApp.Controls[ctrl] = field(input);
 	});
 
+	//textarea control
 	$.litApp.Controls['textarea'] = field(function(control){
 		var prop = $.extend(control,{
 			id: control.name,
@@ -15,6 +16,9 @@
 
 		return $('<textarea>',prop);
 	});
+
+	//input type hidden doesn't need field
+	$.litApp.Controls['hidden'] = input;
 
 	function input(control){
 		var prop = $.extend(control,{
