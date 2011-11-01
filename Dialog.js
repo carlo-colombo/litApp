@@ -23,12 +23,7 @@
 
 			if(v.fields){
 				$.each(v.fields,function(i,field){
-					var $input = $.litApp.Controls[field.type](field);
-					var $field = $('<div>').append($('<label>',{
-						for: field.name,
-						text: field.label || field.name
-					})).append($('<div>',{class : 'input' }).append($input));
-					$tab.append($field);
+					$tab.append($.litApp.Controls[field.type](field));
 				});
 			}
 		});
@@ -62,10 +57,20 @@ jQuery(function($){
 				label : "Tab 1",
 				fields:[
 					{
-						name: 'Name',
-						row:1,
-						type: 'edit',
+						name: 'name',
+						type: 'text',
 						description: 'Insert name here'
+					},
+					{
+						name: 'class',
+						type: 'text',
+					},
+					{
+						name: 'level',
+						type: 'number',
+						max:30,
+						min:1,
+						value: 1
 					}
 				]
 			},
