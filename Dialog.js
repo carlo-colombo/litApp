@@ -1,16 +1,21 @@
 ;(function($){
 	function dialog(dialog,data){
 		var data = data || {};
+
+		//dialog container
 		var $dialog = $('<div>',{
 				id:'dialog',
 				title: dialog.title
 			}).css({
 				'font-size': 10
 			});
+
+		//form
 		var $form = $('<form>')
 			.append($('<ul>'))
 			.appendTo($dialog);
-
+		
+		//tab creation
 		$.each(dialog.tabs,function(k,v){
 			$('<li>').appendTo($dialog.find('ul'))
 				.append($('<a>',{
@@ -22,6 +27,7 @@
 				id: k,
 			}).appendTo($form);
 
+			//field creation
 			if(v.fields){
 				$.each(v.fields,function(i,field){
 					$.extend(field,{
@@ -32,6 +38,7 @@
 			}
 		});
 
+		//dialog creation
 		$dialog
 			.dialog({
 				autoOpen: false,
