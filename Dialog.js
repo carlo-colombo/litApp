@@ -1,5 +1,6 @@
 ;(function($){
-	function dialog(dialog){
+	function dialog(dialog,data){
+		var data = data || {};
 		var $dialog = $('<div>',{
 				id:'dialog',
 				title: dialog.title
@@ -23,6 +24,9 @@
 
 			if(v.fields){
 				$.each(v.fields,function(i,field){
+					$.extend(field,{
+						value: data[field.name] || field.value
+					});
 					$tab.append($.litApp.Controls[field.type](field));
 				});
 			}
@@ -93,6 +97,10 @@ jQuery(function($){
 		title: "Dialog"
 	};
 
-	$.litApp.Dialog(d)
+	$.litApp.Dialog(d,{
+		'class': 'Cleric',
+		'level': 11,
+		'power' : 'lonnnggg   te x   x  t  t  e   g fsfgsg s df  '
+	})
 		.dialog('open');
 });
