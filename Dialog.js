@@ -59,7 +59,7 @@ jQuery(function($){
 					{
 						name: 'name',
 						type: 'text',
-						description: 'Insert name here'
+						placeholder: 'Insert name here'
 					},
 					{
 						name: 'class',
@@ -71,6 +71,12 @@ jQuery(function($){
 						max:30,
 						min:1,
 						value: 1
+					},
+					{
+						name: 'power',
+						type: 'textarea',
+						help: 'Evaluated as markdown',
+						rows: 8
 					}
 				]
 			},
