@@ -46,7 +46,12 @@
 				height:dialog.height ,
 				buttons: {
 					"Save" : dialog.saveHandler || function (){
-						
+						var obj = {};
+						$.each($(this).find('form').serializeArray(),function(k,v){
+							obj[v.name]=v.value;
+						});
+
+						console.log(obj);
 					},
 					"Cancel": function(){
 						$( this ).dialog( "close" );
