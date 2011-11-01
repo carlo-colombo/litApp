@@ -17,10 +17,20 @@
 					href: '#'+k
 				}));
 
-			$('<div>',{
+			var $tab = $('<fieldset>',{
 				id: k,
-				text: "prova " + k
 			}).appendTo($form);
+
+			if(v.fields){
+				$.each(v.fields,function(i,field){
+					var $input = $.litApp.Controls[field.type](field);
+					var $field = $('<div>').append($('<label>',{
+						for: field.name,
+						text: field.label || field.name
+					})).append($('<div>',{class : 'input' }).append($input));
+					$tab.append($field);
+				});
+			}
 		});
 
 		$dialog
@@ -44,13 +54,39 @@
 	$.litApp.Dialog = dialog;
 })(jQuery);
 
+(function($){
+	$.litApp.Controls = {
+		edit : function(control){
+			return (control.row == 1
+				? $('<input>',{
+					type:'text',
+					value: control.default
+				}) 
+				: $('<textarea>').text(control.default))
+				.attr({
+					id: control.name,
+					name : control.name,
+					placeholder: control.description
+				});
+		}	
+	};
+})(jQuery)
+
 
 //test
 jQuery(function($){
 	var d = {
 		tabs:{
 			tab1 : {
-				label : "Tab 1"
+				label : "Tab 1",
+				fields:[
+					{
+						name: 'Name',
+						row:1,
+						type: 'edit',
+						description: 'Insert name here'
+					}
+				]
 			},
 			tab2 : {
 				label: "tab 2"
