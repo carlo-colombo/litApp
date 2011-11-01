@@ -3,7 +3,7 @@
 		var $dialog = $('<form>',{id:'dialog'})
 				.append($('<ul>'));
 
-		$.each(dialog,function(k,v){
+		$.each(dialog.tabs,function(k,v){
 			$('<li>').appendTo($dialog.find('ul'))
 				.append($('<a>',{
 					text: v.label || k,
@@ -17,35 +17,39 @@
 			}).appendTo($dialog);
 		});
 
-		return $dialog
+		$dialog
 			.dialog({
-				autoOpen: true,
+				autoOpen: false,
 				buttons: {
-					"Save" : function (){
+					"Save" : dialog.saveHandler || function (){
 						
 					},
 					"Cancel": function(){
 						$( this ).dialog( "close" );
 					}
 				}
-			})
-			.tabs();
+			});
+		return $dialog.tabs();
 	}
 
 	$.litApp.Dialog = dialog;
 })(jQuery);
 
+
+//test
 jQuery(function($){
 	var d = {
-		tab1 : {
-			label : "Tab 1"
-		},
-		tab2 : {
-			label: "tab 2"
-		},
-		tab3: {	}
+		tabs:{
+			tab1 : {
+				label : "Tab 1"
+			},
+			tab2 : {
+				label: "tab 2"
+			},
+			tab3: {	}
+		}
 	};
 
 	$.litApp.Dialog(d)
-	//.dialog('open');	
+		.dialog('open');	
 });
