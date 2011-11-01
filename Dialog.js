@@ -54,25 +54,6 @@
 	$.litApp.Dialog = dialog;
 })(jQuery);
 
-(function($){
-	$.litApp.Controls = {
-		edit : function(control){
-			return (control.row == 1
-				? $('<input>',{
-					type:'text',
-					value: control.default
-				}) 
-				: $('<textarea>').text(control.default))
-				.attr({
-					id: control.name,
-					name : control.name,
-					placeholder: control.description
-				});
-		}	
-	};
-})(jQuery)
-
-
 //test
 jQuery(function($){
 	var d = {
