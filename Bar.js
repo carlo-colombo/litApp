@@ -16,12 +16,14 @@
 		$.each(prop.dialogs,function(i,d){
 			var $a =$('<a>',{
 				text : d.title,
-				'class': 'btn info'
-			})
-			.data('dialog',d)
-			.bind('click',function(){
-				$.litApp.Dialog($(this).data('dialog')).dialog('open');
+				'class': 'btn info',
+				'data-controls-modal': 'dialog_'+d.title.replace(' ','')
 			});
+			
+			$.litApp.Dialog(d)
+				.hide()
+				.appendTo('body');
+			
 			$('<li>')
 				.append($a)
 				.appendTo($topBar.find('ul.nav'));
@@ -53,12 +55,6 @@ jQuery(function($){
 						max:30,
 						min:1,
 						value: 1
-					},
-					{
-						name: 'power',
-						type: 'textarea',
-						help: 'Evaluated as markdown',
-						rows: 8
 					},
 					{
 						name: 'nascosto',

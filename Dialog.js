@@ -4,16 +4,33 @@
 
 		//dialog container
 		var $dialog = $('<div>',{
-				id:'dialog',
-				title: dialog.title
-			}).css({
-				'font-size': 10
+				id: 'dialog_'+dialog.title.replace(' ',''),
+				title: dialog.title,
+				class:'modal'
 			});
+		
+		//dialog header	
+		$dialog.append($('<div class="modal-header">\
+            <a href="#" class="close">x</a>\
+            <h3>'+dialog.title+'</h3>\
+        </div>'))
 
 		//form
-		var $form = $('<form>')
-			.append($('<ul>'))
-			.appendTo($dialog);
+		var $form = $('<form>',{
+			'class' : 'tab-content'
+		});
+		
+		$dialog.append($('<div>',{
+			'class': 'modal-body'
+		}));
+
+		$dialog
+			.find('.modal-body')
+			.append($('<ul>',{
+				'class' :'tabs',
+				'data-tabs' : 'tabs'
+			}))
+			.append($form);
 		
 		//tab creation
 		$.each(dialog.tabs,function(k,v){
@@ -38,28 +55,32 @@
 			}
 		});
 
-		//dialog creation
-		$dialog
-			.dialog({
-				autoOpen: false,
-				width: dialog.width || 500,
-				height:dialog.height ,
-				buttons: {
-					"Save" : dialog.saveHandler || function (){
-						var obj = {};
-						$.each($(this).find('form').serializeArray(),function(k,v){
-							obj[v.name]=v.value;
-						});
+		$('<div class="modal-footer">\
+            <a href="#" class="btn secondary cancel">Cancel</a>\
+            <a href="#" class="btn primary save">Save</a>\
+          </div>').appendTo($dialog);
 
-						console.log(obj);
-					},
-					"Cancel": function(){
-						$( this ).dialog( "close" );
-					}
-				}
-			});
-		$form.tabs();
-		return $dialog;
+		$dialog
+			.find('li:eq(0)').addClass('active').end()
+			.find('fieldset:eq(0)').addClass('active').end()
+			.find('.btn.cancel').bind('click',function(){
+				$(this).closest('.modal').modal('hide');
+			}).end()
+			.find('.btn.save').bind('click',function(){
+
+				var obj = {};
+				$.each($(this).find('form').serializeArray(),function(k,v){
+					obj[v.name]=v.value;
+				});
+
+				console.log(obj);
+
+				$(this).closest('.modal').modal('hide');
+			}).end();
+
+		return $dialog.modal({
+			backdrop:true
+		});
 	}
 
 	$.litApp.Dialog = dialog;
