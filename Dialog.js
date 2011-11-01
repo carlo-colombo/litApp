@@ -1,25 +1,33 @@
 ;(function($){
 	function dialog(dialog){
-		var $dialog = $('<form>',{id:'dialog'})
-				.append($('<ul>'));
+		var $dialog = $('<div>',{
+				id:'dialog',
+				title: dialog.title
+			}).css({
+				'font-size': 10
+			});
+		var $form = $('<form>')
+			.append($('<ul>'))
+			.appendTo($dialog);
 
 		$.each(dialog.tabs,function(k,v){
 			$('<li>').appendTo($dialog.find('ul'))
 				.append($('<a>',{
 					text: v.label || k,
-					id: k,
 					href: '#'+k
 				}));
 
 			$('<div>',{
 				id: k,
 				text: "prova " + k
-			}).appendTo($dialog);
+			}).appendTo($form);
 		});
 
 		$dialog
 			.dialog({
 				autoOpen: false,
+				width: dialog.width || 500,
+				height:dialog.height ,
 				buttons: {
 					"Save" : dialog.saveHandler || function (){
 						
@@ -29,7 +37,8 @@
 					}
 				}
 			});
-		return $dialog.tabs();
+		$form.tabs();
+		return $dialog;
 	}
 
 	$.litApp.Dialog = dialog;
@@ -47,9 +56,10 @@ jQuery(function($){
 				label: "tab 2"
 			},
 			tab3: {	}
-		}
+		},
+		title: "Dialog"
 	};
 
 	$.litApp.Dialog(d)
-		.dialog('open');	
+		.dialog('open');
 });
