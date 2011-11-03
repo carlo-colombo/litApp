@@ -42,7 +42,7 @@
 			}));
 			$('<div>',{class : 'input' })
 				.append($input)
-				.append(
+				.append(control.help &&
 					$('<span>',{
 						text: control.help,
 						'class': 'help-block'
