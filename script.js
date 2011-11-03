@@ -50,7 +50,8 @@ var d = {
 					$.litApp.Bar({
 						title: "Test",
 						dialogs : [d]
-					});
+					})
+					.appendTo('body');
 				});
 			}
 		}

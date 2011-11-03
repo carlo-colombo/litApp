@@ -1,5 +1,5 @@
 (function($){
-	var $topBar = $('<div class="topbar-wrapper" style="z-index: 5;">\
+	var $bar = $('<div class="topbar-wrapper" style="z-index: 5;">\
 	    <div class="topbar" data-dropdown="dropdown">\
 	      <div class="topbar-inner">\
 	        <div class="container">\
@@ -12,7 +12,7 @@
 	</div>');
 
   	$.litApp.Bar = function(prop,data){
-		$topBar.find('h3').text(prop.title);
+		$bar.find('h3').text(prop.title);
 		$.each(prop.dialogs,function(i,d){
 			var $a =$('<a>',{
 				text : d.title,
@@ -22,13 +22,13 @@
 			
 			$.litApp.Dialog(d,data)
 				.hide()
-				.appendTo('body');
+				.appendTo($bar);
 			
 			$('<li>')
 				.append($a)
-				.appendTo($topBar.find('ul.nav'));
+				.appendTo($bar.find('ul.nav:eq(0)'));
 		});
-		$topBar.appendTo('body');
+		return $bar;
   	}
 
 })(jQuery);
