@@ -3,8 +3,10 @@ function(doc, req) {
 	var mc = require('vendor/mustache.couch')
 	if(doc){
 		var template = mc.compile(this, def.template || doc.metadata.template);
-		doc.def = def;
-		doc.design  = this;
-		template.show(doc)
+		template.show({
+			content: doc,
+			def: def,
+			design: this
+		})
 	}
 }
