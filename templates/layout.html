@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <head>
-	<title>{{content.title}}</title>
+	<title>{{content.title}} {{content.metadata.template}}</title>
 </head>
-<body>
+<body data-template="{{content.metadata.template}}">
 <!-- %YIELD -->
+<script type="text/javascript" src="https://raw.github.com/SlexAxton/yepnope.js/master/yepnope.1.0.2-min.js"></script>
+	<script type="text/javascript" src="/litapp/_design/litApp/litApp/script.js"></script>
 </body>
 </html>
