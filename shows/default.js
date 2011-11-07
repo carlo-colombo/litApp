@@ -6,7 +6,9 @@ function(doc, req) {
 		template.show({
 			content: doc,
 			def: def,
-			design: this
+			design: this,
+			req: req,
+			base: '/' + req.path.slice(0,3).join('/')
 		})
 	}
 }

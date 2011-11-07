@@ -4,13 +4,15 @@
 			"label" : "Tab 1",
 			"fields":[
 				{
-					"name": "name",
+					"name": "title",
 					"type": "text",
-					"placeholder": "Insert name here"
+					"placeholder": "Insert name here",
+					"label": "Character name"
 				},
 				{
-					"name": "class",
-					"type": "text"
+					"name": "characterClass",
+					"type": "text",
+					"label": "class"
 				},
 				{
 					"name": "level",
@@ -18,13 +20,7 @@
 					"max": 30,
 					"min":1,
 					"value": 1
-				},
-				{
-					"name": "nascosto",
-					"type": "hidden",
-					"value": "nascosto"
-				}
-			]
+				}			]
 		}
 	},
 	"title": "Properties"

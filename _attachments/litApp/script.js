@@ -1,56 +1,66 @@
-;(function(){
-
+var startLitApp = function(designPath){
 	yepnope([{
-		load: 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js',
+		load: ['http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js',
+				'http://twitter.github.com/bootstrap/1.4.0/bootstrap-tabs.js',
+				'http://twitter.github.com/bootstrap/1.4.0/bootstrap-modal.js',
+				designPath + '/litApp/litApp.js',
+				designPath + '/litApp/Control.js',
+				designPath + '/litApp/Dialog.js',
+				designPath + '/litApp/Bar.js',
+				'http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css'],
 		complete: function(){
 			if(window.jQuery){
-				jQuery(function(){
-					console.log('domready');
-				})
+				jQuery(function($){
+					$('html').bind('dataReady.litApp designReady.litApp',function(e,data){
+						var $this=$(this);
+						switch (e.type){
+							case 'dataReady':
+								$this.data('data',data);
+								break;
+							case 'designReady':
+								$this.data('design',data);
+								break;
+						}
 
-				jQuery.getJSON('/_session',function(session){
-					var editMode = jQuery.inArray('_admin',session.userCtx.roles) ||
-						jQuery.inArray('_editor',session.userCtx.roles),
-						design = {} ;
+						if($this.data('data') && $this.data('design')){
+							var data = $this.data('data'),
+								design = $this.data('design'),
+								template = $('body').data('template'),
+								templateDef = design.config.templates[template],
+								dialogs = design.config.dialog[templateDef.dialog || template];
+							
+							if(typeof(dialogs) == "object" ){
+								dialogs = [dialogs];
+							}
 
-					if(editMode){
-						$.getJSON('/litapp/_design/litApp',function(d){
-							design = d;						
-						});
-					}
+							$.litApp.Bar({
+								dialogs : dialogs
+							},data)
+							.appendTo('body');
+							$('body').css('paddingTop',40);
+						}
+					});
+				});
 
-					yepnope([{
-						test: editMode,
-						yep: [
-							'http://twitter.github.com/bootstrap/1.4.0/bootstrap-tabs.js',
-							'http://twitter.github.com/bootstrap/1.4.0/bootstrap-modal.js',
-							'/litapp/_design/litApp/litApp/litApp.js',
-							'/litapp/_design/litApp/litApp/Control.js',
-							'/litapp/_design/litApp/litApp/Dialog.js',
-							'/litapp/_design/litApp/litApp/Bar.js',
-							'http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css'
-						],
-						complete: function(){
-							jQuery(function($){
-								var template = $('body').data('template'),
-									templateDef = design.config.templates[template],
-									dialogs = design.config.dialog[templateDef.dialog || template];
-								
-								if(typeof(dialogs) == "object" ){
-									dialogs = [dialogs];
-								}
+				(function($){
+					$.getJSON('/_session',function(session){
+						var editMode = $.inArray('_admin',session.userCtx.roles) >=0
+							|| $.inArray('_editor',session.userCtx.roles) >=0;
 
-								$.litApp.Bar({
-									title: "Test",
-									dialogs : dialogs
-								})
-								.appendTo('body');
-								$('body').css('paddingTop',40);
+						if(editMode){
+							$.getJSON('/'+designPath.split('/')[1] +'/' + $('body').data('id'),function(data){
+								console.log('data ready');
+								$('html').trigger('dataReady.litApp',data);
+							});
+
+							$.getJSON( designPath ,function(design){
+								console.log('design ready');
+								$('html').trigger('designReady.litApp',design);						
 							});
 						}
-					}]);
-				});
+					});
+				})(jQuery)
 			}
 		}
 	}])
-})();
+}

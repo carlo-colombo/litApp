@@ -69,13 +69,20 @@
 			.find('.btn.save').bind('click',function(){
 
 				var obj = {};
-				$.each($(this).find('form').serializeArray(),function(k,v){
+				$.each($(this).closest('.modal').find('form').serializeArray(),function(k,v){
 					obj[v.name]=v.value;
 				});
 
-				console.log(obj);
+				$.extend(data,obj);
+
+				$.ajax('/litapp/'+$('body').data('id'),{
+					dataType:'json',
+					data: JSON.stringify(data),
+					type:'PUT'
+				});
 
 				$(this).closest('.modal').modal('hide');
+				window.location.reload();
 			}).end();
 
 		return $dialog.modal({
