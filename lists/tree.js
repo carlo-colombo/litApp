@@ -1,13 +1,15 @@
 function(head, req) {
-	var template = require('vendor/mustache.couch').compile(this,'admin_tree',{
-		layout: 'admin_layout'
-	});
 
-	var ddoc = this;
+	var ddoc = this,
+		litApp = new require('vendor/litApp').litApp(ddoc),
+		template = require('vendor/mustache.couch').compile(this,'admin_tree',{
+			layout: 'admin_layout'
+		});
 
 	template.stream({
 		title:'Admin',
-		subtitle:'Tree view'
+		subtitle:'Tree view',
+		footer: 'litApp admin &copy;2011'
 	},function(row){
 		var templates = [];
 
@@ -15,13 +17,14 @@ function(head, req) {
 			templates[templates.length]={
 				name: ddoc.config.templates[t].name || t,
 				template: t,
-				selected: t == row.value.metadata.template
+				selected: t == row.value.metadata.template ? 'selected' :''
 			}
 		}
 
 		return {
 			level: row.value.metadata.path.length,
 			content: row.value,
+			link: litApp.link(row.value),
 			templates: templates
 		}
 	});
