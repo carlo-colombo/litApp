@@ -1,3 +1,6 @@
 [submodule "_attachments/jaml"]
 	path = _attachments/jaml
 	url = ../jaml/
+[submodule "vendor/mustache.couch.js"]
+	path = vendor/mustache.couch.js
+	url = /home/ilich/Progetti/mustache.couch.js/
