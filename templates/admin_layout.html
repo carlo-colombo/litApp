@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+	<title>{{content.title}}</title>
+	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="content">
+	        <div class="page-header">
+	        	<h1>{{title}}<small>{{subtitle}}</small></h1>
+	        </div>
+	        <div class="row">
+				<div class="span12">
+					{{{yield}}}
+				</div>
+				<div class="span2">
+					{{{tools}}}
+					tools
+				</div>
+	        </div>
+	    </div>
+		<footer>{{footer}}</footer>
+	</div>
+</body>
+</html>
