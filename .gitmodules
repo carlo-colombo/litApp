@@ -1,3 +1,0 @@
-[submodule "vendor/mustache.couch.js"]
-	path = vendor/mustache.couch.js
-	url = https://github.com/gbuesing/mustache.couch.js.git
