@@ -1,6 +1,7 @@
 function(doc, req) {
-	var def = this.config.templates[doc.metadata.template];
-	var mc = require('vendor/mustache.couch')
+	var def = this.config.templates[doc.metadata.template],
+		mc = require('vendor/mustache.couch'),
+		litApp = new require('vendor/litApp').litApp(this)
 	if(doc){
 		var template = mc.compile(this, def.template || doc.metadata.template);
 		template.show({
@@ -8,7 +9,7 @@ function(doc, req) {
 			def: def,
 			design: this,
 			req: req,
-			base: '/' + req.path.slice(0,3).join('/')
+			base: litApp.base
 		})
 	}
 }

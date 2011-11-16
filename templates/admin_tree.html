@@ -1,4 +1,4 @@
-<table class="bordered-table">
+<table id="tree" class="bordered-table">
   <thead>
 	  <tr>
 	  	<th>Level</th>
@@ -8,10 +8,16 @@
 	  </tr>
   </thead>
   {{#rows}}
-  <tr>
+  <tr id="{{content._id}}" data-path="{{content.metadata.path}}" data-rev="{{content._rev}}">
   	<td>{{level}}</td>
-  	<td>{{content.name}}</td>
-    <td>{{content.title}}</td>
+  	<td>
+      <a href="{{link}}" target="_blank">
+        {{content.name}}
+      </a>
+    </td>
+    <td>
+        {{content.title}}
+    </td>
     <td>
     	<select>
     	{{#templates}}
@@ -19,6 +25,16 @@
     	{{/templates}}
     	</select>	
     </td>
+    <td>
+    	<a href="#new" class="label">Add page</a>
+    	<a href="#delete" class="label">Delete</a>
+    </td>
   </tr>
   {{/rows}}
 </table>
+<script src="{{design}}/litApp/litApp.js">
+</script>
+<script>
+var litApp = new $.litApp('{{design}}');
+litApp.admin();
+</script>

@@ -9,7 +9,8 @@ function(head, req) {
 	template.stream({
 		title:'Admin',
 		subtitle:'Tree view',
-		footer: 'litApp admin &copy;2011'
+		footer: 'litApp admin &copy;2011',
+		design: litApp.base
 	},function(row){
 		var templates = [];
 
