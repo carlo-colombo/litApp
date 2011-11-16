@@ -38,7 +38,18 @@
                            }
                         });
                     }
-                }).find('a[href=#new]')
+                }).on('change','select[name=template]',function(){
+                    var $tr = $(this).closest('tr'),
+                            id = $tr.attr('id');
+                    $.ajax({
+                        url : self.design + '/_update/changeTemplate/' + id,
+                        type: 'put',
+                        data:{
+                            template: $(this).val()
+                        }
+                    })
+                })
+                .find('a[href=#new]')
                     .addClass('success').end()
                 .find('a[href=#delete]')
                     .addClass('important');
