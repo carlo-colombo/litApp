@@ -1,10 +1,12 @@
-exports.litApp = function(design){
+exports.litApp = function(opt){
 
-	this.design = design,
+	this.design = opt.design,
+	this.userCtx = opt.userCtx,
 	this.link = function (doc){
-		return "/litapp/" + this.design._id + "/_show/default/"+doc._id;
+		return "/" + [this.userCtx.db,this.design._id,"_show/default",doc._id].join("/")
 	},
-	this.base = '/'+ design.db + '/' + design._id;
+
+	this.base = '/'+ this.userCtx.db + '/' + this.design._id;
 
 	return this;
 }
