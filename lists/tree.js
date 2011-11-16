@@ -1,7 +1,10 @@
 function(head, req) {
 
 	var ddoc = this,
-		litApp = new require('vendor/litApp').litApp(ddoc),
+		litApp = new require('vendor/litApp').litApp({
+			design: ddoc,
+			userCtx: req.userCtx	
+		}),
 		template = require('vendor/mustache.couch').compile(this,'admin_tree',{
 			layout: 'admin_layout'
 		});
