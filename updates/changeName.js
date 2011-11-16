@@ -1,4 +1,4 @@
 function(doc,req){
 	doc.name =req.form.name;
-	return [doc,''];
+	return [doc,doc.name];
 }
