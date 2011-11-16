@@ -23,19 +23,21 @@
                         });
 
                 }).on('click','a[href=#delete]',function(){
-                    var $tr = $(this).closest('tr'),
-                        id = $tr.attr('id'),
-                        rev = $tr.data('rev');
-                    $.ajax({
-                       url: '/' + ddoc.db + '/' + id,
-                       type: 'delete',
-                       data: {
-                           rev: rev
-                       },
-                       success: function(){
-                           $(this).slideUp().remove();
-                       }
-                    });
+                    if(confirm('Are you sure?')){
+                        var $tr = $(this).closest('tr'),
+                            id = $tr.attr('id'),
+                            rev = $tr.data('rev');
+                        $.ajax({
+                           url: '/' + ddoc.db + '/' + id,
+                           type: 'delete',
+                           headers: {
+                               'If-Match': rev
+                           },
+                           success: function(){
+                               $tr.remove();
+                           }
+                        });
+                    }
                 }).find('a[href=#new]')
                     .addClass('success').end()
                 .find('a[href=#delete]')
