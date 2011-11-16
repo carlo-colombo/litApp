@@ -41,7 +41,12 @@
                 }).find('a[href=#new]')
                     .addClass('success').end()
                 .find('a[href=#delete]')
-                    .addClass('important');    
+                    .addClass('important');
+                    
+                $('#tools').on('click','a.btn.new',function(){
+                    $.post(self.design+'/_update/newPage');
+                    return false;
+                });    
             });            
         }
 
