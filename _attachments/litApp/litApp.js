@@ -14,12 +14,19 @@
             $.getJSON(self.design,function(ddoc){
                 $('#tree').on('click','a[href=#new]',function(){
                     var $tr = $(this).closest('tr'),
-                        path = $tr.data('path').split(',');
+                        id = $tr.attr('id'),
+                        path = $tr.data('path');
 
-                        $.post(self.design+'/_update/newPage',{
-                            path: path.join(',')
+                        $.post(self.design + '/_update/newPage',{
+                            path: path
                         },function(res){
-                            console.log(res);
+                            $.ajax({
+                                url: self.design + '/_update/addChild/'+id, 
+                                type:'put',
+                                data: {
+                                    child:res
+                                }
+                            });
                         });
 
                 }).on('click','a[href=#delete]',function(){
@@ -70,7 +77,7 @@
                     $.post(self.design+'/_update/newPage');
                     return false;
                 });    
-            });            
+            });
         }
 
         return this;
