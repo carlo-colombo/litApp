@@ -9,9 +9,10 @@ function(doc,req){
 				: [req.uuid],
 			"template" : Object.keys(this.config.templates)[0],
 			"author": req.userCtx.name,
-			"created": Date()
+			"created": Date(),
+			"children":[]
 		}
 	}
 
-	return [doc,'lol'];
+	return [doc,req.uuid];
 }
