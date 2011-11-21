@@ -1,35 +1,28 @@
-<table id="tree" class="bordered-table">
+<table>
   <thead>
-	  <tr>
-	  	<th>Level</th>
-	  	<th>Name</th>
-	  	<th>Title</th>
-	  	<th>Template</th>
-	  </tr>
+    <tr>
+      <th>Name</th>
+      <th>Title</th>
+      <th>Template</th>
+      <th>Action</th>
+    </tr>
   </thead>
   {{#rows}}
-  <tr id="{{content._id}}" data-path="{{content.metadata.path}}" data-rev="{{content._rev}}">
-  	<td>{{level}}</td>
-  	<td class="name">
-      <a href="{{link}}" target="_blank">
-        {{content.name}}
-      </a>
-    </td>
-    <td>
-        {{content.title}}
-    </td>
-    <td>
-    	<select name="template">
-    	{{#templates}}
-    		<option value="{{template}}" {{selected}}>{{name}}</option>
-    	{{/templates}}
-    	</select>	
-    </td>
-    <td>
-    	<a href="#new" class="label">Add page</a>
-    	<a href="#delete" class="label">Delete</a>
-    </td>
-  </tr>
+    <tr>
+      <td class="name"><a href="#" class="open">+</a>{{content.name}}</td>
+      <td class="title">{{content.title}}</td>
+      <td class="template">
+        <select>
+        {{#templates}}
+          <option value="{{template}}" {{selected}}>{{name}}</option>
+        {{/templates}}
+        </select>
+      </td>
+      <td>
+        <a href="#new" class="label">Add page</a>
+        <a href="#delete" class="label">Delete</a>
+      </td>
+    </tr>
   {{/rows}}
 </table>
 <script src="{{design}}/litApp/litApp.js">

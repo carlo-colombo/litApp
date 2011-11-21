@@ -21,15 +21,15 @@ function(head, req) {
 			templates[templates.length]={
 				name: ddoc.config.templates[t].name || t,
 				template: t,
-				selected: t == row.value.metadata.template ? 'selected' :''
+				selected: t == row.value.template ? 'selected' :''
 			}
 		}
 
 		return {
-			level: row.value.metadata.path.length,
 			content: row.value,
 			link: litApp.link(row.value),
-			templates: templates
+			templates: templates,
+			children: row.value.children.join(',')
 		}
 	});
 }
