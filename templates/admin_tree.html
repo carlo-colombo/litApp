@@ -3,7 +3,7 @@
     {{#rows}}
       <li id="{{content.id}}" data-children="{{children}}" data-rev="{{content.rev}}">
         <a href="#" class="btn open">+</a>
-        <a href="#" class="name">
+        <a href="{{link}}" class="name">
         {{content.name}}</a>
         <span>{{content.title}}</span>
         <span>
@@ -20,7 +20,6 @@
 </div>
 <script src="{{design}}/litApp/litApp.js"></script>
 <script>
-var litApp = new $.litApp('{{design}}');
-
-litApp.admin();
+  var litApp = new $.litApp('{{design}}');
+  litApp.admin();
 </script>
