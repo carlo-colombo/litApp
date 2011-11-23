@@ -1,7 +1,8 @@
 <div class="tree">
   <ul>
     {{#rows}}
-      <li>
+      <li data-children="{{children}}">
+        <a href="#" class="btn">+</a>
         <a href="#" >
         {{content.name}}</a>
         <span>{{content.title}}</span>
