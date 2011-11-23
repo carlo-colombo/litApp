@@ -82,8 +82,8 @@
                         });
                     }
                 }).on('change','select[name=template]',function(){
-                    var $tr = $(this).closest('tr'),
-                            id = $tr.attr('id');
+                    var $li = $(this).closest('li'),
+                            id = $li.attr('id');
                     $.ajax({
                         url : self.design + '/_update/changeTemplate/' + id,
                         type: 'put',
