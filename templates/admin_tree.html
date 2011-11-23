@@ -1,32 +1,22 @@
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Title</th>
-      <th>Template</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  {{#rows}}
-    <tr>
-      <td class="name"><a href="#" class="open">+</a>{{content.name}}</td>
-      <td class="title">{{content.title}}</td>
-      <td class="template">
-        <select>
-        {{#templates}}
-          <option value="{{template}}" {{selected}}>{{name}}</option>
-        {{/templates}}
-        </select>
-      </td>
-      <td>
-        <a href="#new" class="label">Add page</a>
-        <a href="#delete" class="label">Delete</a>
-      </td>
-    </tr>
-  {{/rows}}
-</table>
-<script src="{{design}}/litApp/litApp.js">
-</script>
+<div class="tree">
+  <ul>
+    {{#rows}}
+      <li>
+        <a href="#" >
+        {{content.name}}</a>
+        <span>{{content.title}}</span>
+        <span>
+          <select>
+          {{#templates}}
+            <option value="{{template}}" {{selected}}>{{name}}</option>
+          {{/templates}}
+          </select>
+        </span>
+      </li>
+    {{/rows}}
+  </ul>
+</div>
+<script src="{{design}}/litApp/litApp.js"></script>
 <script>
 var litApp = new $.litApp('{{design}}');
 litApp.admin();
