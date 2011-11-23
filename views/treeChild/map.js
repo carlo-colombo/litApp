@@ -5,6 +5,7 @@ function(doc) {
 	*/
 	emit(doc._id, {
 		"id": doc._id,
+		"rev": doc._rev,
 		"title": doc.title,
 		"name" : doc.name,
 		"template": doc.metadata.template,
