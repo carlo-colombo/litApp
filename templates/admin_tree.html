@@ -1,9 +1,9 @@
 <div id="tree">
   <ul>
     {{#rows}}
-      <li data-children="{{children}}">
+      <li id="{{content.id}}" data-children="{{children}}">
         <a href="#" class="btn open">+</a>
-        <a href="#" >
+        <a href="#" class="name">
         {{content.name}}</a>
         <span>{{content.title}}</span>
         <span>
