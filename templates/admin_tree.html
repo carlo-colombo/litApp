@@ -1,7 +1,7 @@
 <div id="tree">
   <ul>
     {{#rows}}
-      <li id="{{content.id}}" data-children="{{children}}">
+      <li id="{{content.id}}" data-children="{{children}}" data-rev="{{content.rev}}">
         <a href="#" class="btn open">+</a>
         <a href="#" class="name">
         {{content.name}}</a>
@@ -13,6 +13,7 @@
           {{/templates}}
           </select>
         </span>
+        <a href="#delete" class="btn danger">Delete</a>
       </li>
     {{/rows}}
   </ul>

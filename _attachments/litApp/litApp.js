@@ -67,9 +67,9 @@
 
                 }).on('click','a[href=#delete]',function(){
                     if(confirm('Are you sure?')){
-                        var $tr = $(this).closest('tr'),
-                            id = $tr.attr('id'),
-                            rev = $tr.data('rev');
+                        var $li = $(this).closest('li'),
+                            id = $li.attr('id'),
+                            rev = $li.data('rev');
                         $.ajax({
                            url: '/' + ddoc.db + '/' + id,
                            type: 'delete',
@@ -77,7 +77,7 @@
                                'If-Match': rev
                            },
                            success: function(){
-                               $tr.remove();
+                               $li.remove();
                            }
                         });
                     }
