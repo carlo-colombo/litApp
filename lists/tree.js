@@ -6,7 +6,8 @@ function(head, req) {
 			userCtx: req.userCtx	
 		}),
 		template = require('vendor/mustache.couch').compile(this,'admin_tree',{
-			layout: 'admin_layout'
+			layout: 'admin_layout',
+			rows_only: req.query.rows
 		});
 
 	template.stream({
