@@ -12,6 +12,42 @@
         */
         this.admin = function(){
             $.getJSON(self.design,function(ddoc){
+                $('#tree').on('click','.open',function(){
+                    var $this = $(this),
+                        $li = $this.closest('li'),
+                        $ul = $li.find('ul');
+
+                    $this
+                        .text('-')
+                        .removeClass('open')
+                        .addClass('info close-tree');
+                    if($ul.length == 0){
+                        $.ajax({
+                            url: window.location.pathname+'Child?rows=true',
+                            data: JSON.stringify({
+                                "keys": $li.data('children').split(',')
+                            }),
+                            type: "post",
+                            success: function(data){
+                                $('<ul>')
+                                    .append(data)
+                                    .appendTo($li);
+                            }
+                        });
+                    }else{
+                        $ul.show();
+                    }
+
+                }).on('click','.close-tree',function(){
+                    $(this)
+                        .text('+')
+                        .removeClass('close-tree info')
+                        .addClass('open')
+                        .closest('li')
+                            .find('ul')
+                                .hide()
+                });
+
                 $('#tree').on('click','a[href=#new]',function(){
                     var $tr = $(this).closest('tr'),
                         id = $tr.attr('id'),
@@ -68,10 +104,7 @@
                             $tr.find('.name > a').text(name);
                         }
                     });
-                }).find('a[href=#new]')
-                    .addClass('success').end()
-                .find('a[href=#delete]')
-                    .addClass('important');
+                });
                     
                 $('#tools').on('click','a.btn.new',function(){
                     $.post(self.design+'/_update/newPage');
