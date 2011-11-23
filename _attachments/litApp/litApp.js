@@ -91,9 +91,9 @@
                             template: $(this).val()
                         }
                     })
-                }).on('dblclick','td',function(){
-                    var $tr = $(this).closest('tr'),
-                        id = $tr.attr('id');
+                }).on('dblclick','li > a',function(){
+                    var $li = $(this).closest('li'),
+                        id = $li.attr('id');
                     $.ajax({
                         url : self.design + '/_update/changeName/' + id,
                         type: 'put',
@@ -101,7 +101,7 @@
                             name: prompt("New name")
                         },
                         success: function(name){
-                            $tr.find('.name > a').text(name);
+                            $li.find('a.name').text(name);
                         }
                     });
                 });
