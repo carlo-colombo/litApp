@@ -63,20 +63,28 @@
                         });
 
                 }).on('click','a[href=#delete]',function(){
+
+                    var _delete = function($li){
+                        $li.find('li').each(function(i,el){
+                            _delete($(el)); 
+
+                        });
+                        self.db.removeDoc({
+                           _id : $li.attr('id'),
+                           _rev: $li.data('rev') 
+                        },{
+                            success: function(){
+                                $li.remove();
+                            }
+                        });
+                    }
+
                     if(confirm('Are you sure?')){
                         var $li = $(this).closest('li'),
                             id = $li.attr('id'),
                             rev = $li.data('rev');
-                        $.ajax({
-                           url: '/' + ddoc.db + '/' + id,
-                           type: 'delete',
-                           headers: {
-                               'If-Match': rev
-                           },
-                           success: function(){
-                               $li.remove();
-                           }
-                        });
+                        
+                            _delete($li);
                     }
                 }).on('change','select[name=template]',function(){
                     var $li = $(this).closest('li'),
