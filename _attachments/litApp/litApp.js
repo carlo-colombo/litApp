@@ -35,7 +35,8 @@
                 $('#tree').on('click','a[href=#new]',function(){
                     var $li = $(this).closest('li'),
                         id = $li.attr('id'),
-                        path = $li.data('path');
+                        path = $li.data('path'),
+                        $ul = $li.find('ul');
 
                         $.post(self.options.connection + '/_update/newPage',{
                             path: path
@@ -46,6 +47,18 @@
                                 data: {
                                     child:res
                                 }
+                            });
+                            
+                            if ($ul.length == 0){
+                                if(!$li.data('children')){
+                                    $ul = $('<ul>').appendTo($li);        
+                                }else{
+                                    $li.find('.open-switch').trigger('click');                                    
+                                    return;
+                                }
+                            }
+                            _subtree($li, $ul, {
+                                keys : [res]
                             });
                         });
 
@@ -97,6 +110,20 @@
             });
         }
 
+        var _subtree = function($li, $ul, data){
+            self.db.list(
+                self.options.lists.tree,
+                self.options.views.subtree, 
+                $.extend({
+                    rows: true
+                },data),{
+                    success: function(data){
+                        $ul.append(data).appendTo($li);
+                    }
+                }
+            );
+        }
+
         var _openCloseSubtrees = function(){
             $('#tree').on('click','.open',function(){
                 var $this = $(this),
@@ -109,17 +136,8 @@
                     .addClass('info close-tree');
 
                 if($ul.length == 0){
-                    self.db.list(
-                        self.options.lists.tree,
-                        self.options.views.subtree,{
-                            rows : true,
-                            keys : $li.data('children').split(',')
-                        },{
-                        success: function(data){
-                            $('<ul>')
-                                .append(data)
-                                .appendTo($li);
-                        }
+                    _subtree($li, $('<ul>'), {
+                        keys : $li.data('children').split(',')
                     });
                 }else{
                     $ul.show();
