@@ -64,24 +64,30 @@
 
                 }).on('click','a[href=#delete]',function(){
 
+
                     if(confirm('Are you sure?')){
-                        _delete($(this).closest('li'));
+                        var $li = $(this).closest('li'),
+                            id  = $li.attr('id'),
+                            $parentLi = $li.parent().closest('li');
+                        
+                        _delete($li);
+                        
+                        if($parentLi.length){
+                            $.ajax({
+                                url: self.options.connection 
+                                    + '/_update/removeChild/'
+                                    + $parentLi.attr('id'), 
+                                type:'put',
+                                data: {
+                                    child:id
+                                },
+                                success: function(children){
+                                    $parentLi.data('children',children);        
+                                }
+                            });
+                        }
                     }
 
-                    var _delete = function($li){
-                        $li.find('li').each(function(i,el){
-                            _delete($(el)); 
-
-                        });
-                        self.db.removeDoc({
-                           _id : $li.attr('id'),
-                           _rev: $li.data('rev') 
-                        },{
-                            success: function(){
-                                $li.remove();
-                            }
-                        });
-                    }
                 }).on('change','select[name=template]',function(){
                     var $li = $(this).closest('li'),
                             id = $li.attr('id');
@@ -155,6 +161,21 @@
                     .closest('li')
                         .find('ul')
                             .hide()
+            });
+        }
+
+        var _delete = function($li){
+            $li.find('li').each(function(i,el){
+                _delete($(el)); 
+
+            });
+            self.db.removeDoc({
+               _id : $li.attr('id'),
+               _rev: $li.data('rev') 
+            },{
+                success: function(){
+                    $li.remove();
+                }
             });
         }
 
