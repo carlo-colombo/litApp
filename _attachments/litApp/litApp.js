@@ -1,59 +1,40 @@
 (function($){
-    $.litApp = function(design){
+
+    var defaultOpts = {
+        "db" : "litapp",
+        "design": "/_design/litApp",
+        "paths" : {
+            "subtree" : "/_list/tree/treeChild?rows=true"
+        }
+    }
+
+    $.litApp = function(options){
         
         var self = this;
-        /**
-        * init
-        */
-        self.design = design;
-        
+
+        self.options = $.extend(defaultOpts,options);
+        self.options.connection = "/" 
+            + self.options.db
+            + self.options.design;
+        self.db = new $.couch.db(self.options.db);
+
         /**
         *
         */
         this.admin = function(){
-            $.getJSON(self.design,function(ddoc){
-                $('#tree').on('click','.open',function(){
-                    var $this = $(this),
-                        $li = $this.closest('li'),
-                        $ul = $li.find('ul');
 
-                    $this
-                        .text('-')
-                        .removeClass('open')
-                        .addClass('info close-tree');
-                    if($ul.length == 0){
-                        $.ajax({
-                            url: window.location.pathname+'Child?rows=true',
-                            data: JSON.stringify({
-                                "keys": $li.data('children').split(',')
-                            }),
-                            type: "post",
-                            success: function(data){
-                                $('<ul>')
-                                    .append(data)
-                                    .appendTo($li);
-                            }
-                        });
-                    }else{
-                        $ul.show();
-                    }
+            _openCloseSubtrees.apply(this);
 
-                }).on('click','.close-tree',function(){
-                    $(this)
-                        .text('+')
-                        .removeClass('close-tree info')
-                        .addClass('open')
-                        .closest('li')
-                            .find('ul')
-                                .hide()
-                });
+            $.getJSON(self.options.connection,function(ddoc){
+                
+
 
                 $('#tree').on('click','a[href=#new]',function(){
                     var $tr = $(this).closest('tr'),
                         id = $tr.attr('id'),
                         path = $tr.data('path');
 
-                        $.post(self.design + '/_update/newPage',{
+                        $.post(self.options.design + '/_update/newPage',{
                             path: path
                         },function(res){
                             $.ajax({
@@ -85,7 +66,7 @@
                     var $li = $(this).closest('li'),
                             id = $li.attr('id');
                     $.ajax({
-                        url : self.design + '/_update/changeTemplate/' + id,
+                        url : self.options.design + '/_update/changeTemplate/' + id,
                         type: 'put',
                         data:{
                             template: $(this).val()
@@ -95,7 +76,7 @@
                     var $li = $(this).closest('li'),
                         id = $li.attr('id');
                     $.ajax({
-                        url : self.design + '/_update/changeName/' + id,
+                        url : self.options.design + '/_update/changeName/' + id,
                         type: 'put',
                         data:{
                             name: prompt("New name")
@@ -107,9 +88,47 @@
                 });
                     
                 $('#tools').on('click','a.btn.new',function(){
-                    $.post(self.design+'/_update/newPage');
+                    $.post(self.options.design+'/_update/newPage');
                     return false;
                 });    
+            });
+        }
+
+        var _openCloseSubtrees = function(){
+            $('#tree').on('click','.open',function(){
+                var $this = $(this),
+                    $li = $this.closest('li'), 
+                    $ul = $li.find('ul');
+
+                $this
+                    .text('-')
+                    .removeClass('open')
+                    .addClass('info close-tree');
+                if($ul.length == 0){
+                    $.ajax({
+                        url: self.options.connection + self.options.path.lists.subtree,
+                        data: JSON.stringify({
+                            "keys": $li.data('children').split(',')
+                        }),
+                        type: "post",
+                        success: function(data){
+                            $('<ul>')
+                                .append(data)
+                                .appendTo($li);
+                        }
+                    });
+                }else{
+                    $ul.show();
+                }
+
+            }).on('click','.close-tree',function(){
+                $(this)
+                    .text('+')
+                    .removeClass('close-tree info')
+                    .addClass('open')
+                    .closest('li')
+                        .find('ul')
+                            .hide()
             });
         }
 
