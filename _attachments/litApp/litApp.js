@@ -64,6 +64,10 @@
 
                 }).on('click','a[href=#delete]',function(){
 
+                    if(confirm('Are you sure?')){
+                        _delete($(this).closest('li'));
+                    }
+
                     var _delete = function($li){
                         $li.find('li').each(function(i,el){
                             _delete($(el)); 
@@ -77,14 +81,6 @@
                                 $li.remove();
                             }
                         });
-                    }
-
-                    if(confirm('Are you sure?')){
-                        var $li = $(this).closest('li'),
-                            id = $li.attr('id'),
-                            rev = $li.data('rev');
-                        
-                            _delete($li);
                     }
                 }).on('change','select[name=template]',function(){
                     var $li = $(this).closest('li'),
