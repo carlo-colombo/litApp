@@ -1,8 +1,8 @@
 <div id="tree">
   <ul>
     {{#rows}}
-      <li id="{{content.id}}" data-children="{{children}}" data-rev="{{content.rev}}">
-        <a href="#" class="btn open">+</a>
+      <li id="{{content.id}}" data-children="{{children}}" data-rev="{{content.rev}}" data-path="{{path}}">
+        <a href="#" class="btn open open-switch">+</a>
         <a href="{{link}}" class="name">
         {{content.name}}</a>
         <span>{{content.title}}</span>
@@ -13,11 +13,13 @@
           {{/templates}}
           </select>
         </span>
+        <a href="#new" class="btn success">Add child</a>
         <a href="#delete" class="btn danger">Delete</a>
       </li>
     {{/rows}}
   </ul>
 </div>
+<script src="{{design}}/jquery.couch.js"></script>
 <script src="{{design}}/litApp/litApp.js"></script>
 <script>
   var litApp = new $.litApp('{{design}}');

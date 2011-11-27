@@ -30,7 +30,8 @@ function(head, req) {
 			content: row.value,
 			link: litApp.link(row.value),
 			templates: templates,
-			children: row.value.children.join(',')
+			children: row.value.children.join(','),
+			path: row.value.path.join(',')
 		}
 	});
 }

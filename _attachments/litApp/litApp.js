@@ -33,15 +33,15 @@
 
             $.getJSON(self.options.connection,function(ddoc){
                 $('#tree').on('click','a[href=#new]',function(){
-                    var $tr = $(this).closest('tr'),
-                        id = $tr.attr('id'),
-                        path = $tr.data('path');
+                    var $li = $(this).closest('li'),
+                        id = $li.attr('id'),
+                        path = $li.data('path');
 
-                        $.post(self.options.design + '/_update/newPage',{
+                        $.post(self.options.connection + '/_update/newPage',{
                             path: path
                         },function(res){
                             $.ajax({
-                                url: self.design + '/_update/addChild/'+id, 
+                                url: self.options.connection + '/_update/addChild/'+id, 
                                 type:'put',
                                 data: {
                                     child:res
@@ -91,7 +91,7 @@
                 });
                     
                 $('#tools').on('click','a.btn.new',function(){
-                    $.post(self.options.design+'/_update/newPage');
+                    $.post(self.options.connection+'/_update/newPage');
                     return false;
                 });    
             });
@@ -107,14 +107,14 @@
                     .text('-')
                     .removeClass('open')
                     .addClass('info close-tree');
-                    
+
                 if($ul.length == 0){
                     self.db.list(
                         self.options.lists.tree,
                         self.options.views.subtree,{
                             rows : true,
                             keys : $li.data('children').split(',')
-                    },{
+                        },{
                         success: function(data){
                             $('<ul>')
                                 .append(data)

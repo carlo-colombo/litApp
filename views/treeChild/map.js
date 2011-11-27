@@ -9,6 +9,7 @@ function(doc) {
 		"title": doc.title,
 		"name" : doc.name,
 		"template": doc.metadata.template,
-		"children": doc.metadata.children
+		"children": doc.metadata.children,
+		"path": doc.metadata.path
 	});	
 }
