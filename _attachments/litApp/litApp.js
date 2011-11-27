@@ -102,7 +102,7 @@
                     var $li = $(this).closest('li'),
                         id = $li.attr('id');
                     $.ajax({
-                        url : self.options.design + '/_update/changeName/' + id,
+                        url : self.options.connection + '/_update/changeName/' + id,
                         type: 'put',
                         data:{
                             name: prompt("New name")
@@ -114,7 +114,11 @@
                 });
                     
                 $('#tools').on('click','a.btn.new',function(){
-                    $.post(self.options.connection+'/_update/newPage');
+                    $.post(self.options.connection+'/_update/newPage',function(data){
+                        _subtree(null, $('#tree').find('ul'), {
+                            keys: [data]
+                        })
+                    });
                     return false;
                 });    
             });
@@ -128,7 +132,11 @@
                     rows: true
                 },data),{
                     success: function(data){
-                        $ul.append(data).appendTo($li);
+                        if($li){
+                            $ul.append(data).appendTo($li);
+                        }else{
+                            $(data).appendTo($ul);
+                        }
                     }
                 }
             );
