@@ -5,6 +5,12 @@
         "design": "/_design/litApp",
         "paths" : {
             "subtree" : "/_list/tree/treeChild?rows=true"
+        },
+        "lists" : {
+            "tree" : "litApp/tree"            
+        },
+        "views" : {
+            "subtree" : "treeChild" 
         }
     }
 
@@ -16,7 +22,7 @@
         self.options.connection = "/" 
             + self.options.db
             + self.options.design;
-        self.db = new $.couch.db(self.options.db);
+        self.db = $.couch.db(self.options.db);
 
         /**
         *
@@ -26,9 +32,6 @@
             _openCloseSubtrees.apply(this);
 
             $.getJSON(self.options.connection,function(ddoc){
-                
-
-
                 $('#tree').on('click','a[href=#new]',function(){
                     var $tr = $(this).closest('tr'),
                         id = $tr.attr('id'),
@@ -104,13 +107,14 @@
                     .text('-')
                     .removeClass('open')
                     .addClass('info close-tree');
+                    
                 if($ul.length == 0){
-                    $.ajax({
-                        url: self.options.connection + self.options.path.lists.subtree,
-                        data: JSON.stringify({
-                            "keys": $li.data('children').split(',')
-                        }),
-                        type: "post",
+                    self.db.list(
+                        self.options.lists.tree,
+                        self.options.views.subtree,{
+                            rows : true,
+                            keys : $li.data('children').split(',')
+                    },{
                         success: function(data){
                             $('<ul>')
                                 .append(data)
