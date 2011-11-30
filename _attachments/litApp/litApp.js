@@ -40,7 +40,27 @@
 
                         $.post(self.options.connection + '/_update/newPage',{
                             path: path
-                        }, _onNewPage);
+                        }, function(res){
+                            $.ajax({
+                                url: self.options.connection + '/_update/addChild/'+id, 
+                                type:'put',
+                                data: {
+                                    child:res
+                                }
+                            });
+                            
+                            if ($ul.length == 0){
+                                if(!$li.data('children')){
+                                    $ul = $('<ul>').appendTo($li);        
+                                }else{
+                                    $li.find('.open-switch').trigger('click');                                    
+                                    return;
+                                }
+                            }
+                            _subtree($li, $ul, {
+                                keys : [res]
+                            });
+                        });
 
                 }).on('click','a[href=#delete]',function(){
 
@@ -123,28 +143,6 @@
                     }
                 }
             );
-        }
-
-        var _onNewPage = function(res){
-            $.ajax({
-                url: self.options.connection + '/_update/addChild/'+id, 
-                type:'put',
-                data: {
-                    child:res
-                }
-            });
-            
-            if ($ul.length == 0){
-                if(!$li.data('children')){
-                    $ul = $('<ul>').appendTo($li);        
-                }else{
-                    $li.find('.open-switch').trigger('click');                                    
-                    return;
-                }
-            }
-            _subtree($li, $ul, {
-                keys : [res]
-            });
         }
 
         var _openCloseSubtrees = function(){
