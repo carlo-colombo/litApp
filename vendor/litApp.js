@@ -14,7 +14,11 @@ exports.litApp = function(opt){
 							<script src="' + this.design + '/litApp/Control.js"></script>\
 							<script src="' + this.design + '/litApp/Dialog.js"></script>\
 							<script src="' + this.design + '/litApp/Bar.js"></script>\
-							<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">'
+							<script src="' + this.design + '/litApp/script.js"></script>\
+							<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">\
+							<script type="text/javascript">\
+								startLitApp("{{base}}");\
+							</script>';
 
 	return this;
 }
