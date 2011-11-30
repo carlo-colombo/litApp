@@ -8,5 +8,13 @@ exports.litApp = function(opt){
 
 	this.base = '/'+ this.userCtx.db + '/' + this.design._id;
 
+	this.litAppHeader = '<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>\
+							<script src="http://twitter.github.com/bootstrap/1.4.0/bootstrap-tabs.js"></script>\
+							<script src="http://twitter.github.com/bootstrap/1.4.0/bootstrap-modals.js"></script>\
+							<script src="' + this.design + '/litApp/Control.js"></script>\
+							<script src="' + this.design + '/litApp/Dialog.js"></script>\
+							<script src="' + this.design + '/litApp/Bar.js"></script>\
+							<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">'
+
 	return this;
 }
