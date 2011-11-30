@@ -1,0 +1,28 @@
+{
+	"tabs":{
+		"tab1" : {
+			"label" : "Properties",
+			"fields":[
+				{
+					"name": "title",
+					"type": "text",
+					"placeholder": "Insert name here",
+					"label": "Name"
+				},
+				{
+					"name": "characterClass",
+					"type": "text",
+					"label": "Class"
+				},
+				{
+					"name": "level",
+					"type": "number",
+					"max": 30,
+					"min":1,
+					"value": 1
+				}
+			]
+		}
+	},
+	"title": "Properties"
+}
