@@ -40,30 +40,9 @@
 
                         $.post(self.options.connection + '/_update/newPage',{
                             path: path
-                        },function(res){
-                            $.ajax({
-                                url: self.options.connection + '/_update/addChild/'+id, 
-                                type:'put',
-                                data: {
-                                    child:res
-                                }
-                            });
-                            
-                            if ($ul.length == 0){
-                                if(!$li.data('children')){
-                                    $ul = $('<ul>').appendTo($li);        
-                                }else{
-                                    $li.find('.open-switch').trigger('click');                                    
-                                    return;
-                                }
-                            }
-                            _subtree($li, $ul, {
-                                keys : [res]
-                            });
-                        });
+                        }, _onNewPage);
 
                 }).on('click','a[href=#delete]',function(){
-
 
                     if(confirm('Are you sure?')){
                         var $li = $(this).closest('li'),
@@ -124,6 +103,10 @@
             });
         }
 
+        this.mainBar = function(){
+            
+        }
+
         var _subtree = function($li, $ul, data){
             self.db.list(
                 self.options.lists.tree,
@@ -140,6 +123,28 @@
                     }
                 }
             );
+        }
+
+        var _onNewPage = function(res){
+            $.ajax({
+                url: self.options.connection + '/_update/addChild/'+id, 
+                type:'put',
+                data: {
+                    child:res
+                }
+            });
+            
+            if ($ul.length == 0){
+                if(!$li.data('children')){
+                    $ul = $('<ul>').appendTo($li);        
+                }else{
+                    $li.find('.open-switch').trigger('click');                                    
+                    return;
+                }
+            }
+            _subtree($li, $ul, {
+                keys : [res]
+            });
         }
 
         var _openCloseSubtrees = function(){

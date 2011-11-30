@@ -4,10 +4,6 @@
 </head>
 <body data-template="{{content.metadata.template}}" data-id="{{req.id}}" data-rev="{{content._rev}}">
 {{{yield}}}
-<script type="text/javascript" src="{{base}}/yepnope.1.0.2-min.js"></script>
-<script type="text/javascript" src="{{base}}/litApp/script.js"></script>
-<script type="text/javascript">
-startLitApp('{{base}}');
-</script>
+{{>litAppHeader}}
 </body>
 </html>

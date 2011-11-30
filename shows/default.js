@@ -6,7 +6,12 @@ function(doc, req) {
 			userCtx: req.userCtx
 		})
 	if(doc){
-		var template = mc.compile(this, def.template || doc.metadata.template);
+		var template = mc.compile(this, def.template || doc.metadata.template)
+		//check user role
+		template.partials['litAppHeader'] = true 
+			? litApp.litAppHeader
+			: '';
+		
 		template.show({
 			content: doc,
 			def: def,
