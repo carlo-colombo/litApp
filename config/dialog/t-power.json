@@ -1,0 +1,22 @@
+{
+	"tabs":{
+		"tab1" : {
+			"label" : "Properties",
+			"fields":[
+				{
+					"name": "title",
+					"type": "text",
+					"placeholder": "Insert name here",
+					"label": "Name"
+				},
+				{
+					"name": "description",
+					"type": "textarea",
+					"label": "Description",
+					"help": "Evaluated as markdown"
+				}
+			]
+		}
+	},
+	"title": "Properties"
+}
