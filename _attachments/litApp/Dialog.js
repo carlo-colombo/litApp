@@ -59,10 +59,6 @@
 			$dialog.find('ul').hide();
 		}
 
-		if(Object.keys(dialog.tabs).length == 1){
-			$dialog.find('ul').hide();
-		}
-
 		$('<div class="modal-footer">\
             <a href="#" class="btn secondary cancel">Cancel</a>\
             <a href="#" class="btn primary save">Save</a>\
