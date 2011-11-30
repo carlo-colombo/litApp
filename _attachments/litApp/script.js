@@ -16,7 +16,7 @@ var startLitApp = function(designPath){
 				var data = $this.data('data'),
 					design = $this.data('design'),
 					template = $('body').data('template'),
-					templateDef = design.config.templates[template],
+					templateDef = design.config.templates[template] || template,
 					dialogs = design.config.dialog[templateDef.dialog || template];
 				
 				if(typeof(dialogs) == "object" ){
