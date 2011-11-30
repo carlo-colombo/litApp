@@ -8,7 +8,7 @@ function(doc, req) {
 	if(doc){
 		var template = mc.compile(this, def.template || doc.metadata.template)
 		//check user role
-		template.partials['litAppHeader'] = true 
+		template.partials['litAppHeader'] = true && req.query.preview!='true'
 			? litApp.litAppHeader
 			: '';
 		
