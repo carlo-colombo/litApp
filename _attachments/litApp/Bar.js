@@ -6,7 +6,7 @@
 	          <h3 class="brand"></h3>\
 	          <ul class="nav">\
 	          </ul>\
-	          <a href="#?preview=true">Preview</a>\
+	          <a href="?preview=true">Preview</a>\
 	        </div>\
 	      </div>\
 	    </div>\
