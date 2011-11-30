@@ -71,7 +71,7 @@
                     var $li = $(this).closest('li'),
                             id = $li.attr('id');
                     $.ajax({
-                        url : self.options.design + '/_update/changeTemplate/' + id,
+                        url : self.options.connection + '/_update/changeTemplate/' + id,
                         type: 'put',
                         data:{
                             template: $(this).val()
